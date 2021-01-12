@@ -2,8 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const keys = require("./util/keys");
 const bodyParser = require("body-parser");
-
+const Router = require('express-promise-router');
+const router = Router();
 const cors = require("cors");
+
 
 //models
 
@@ -11,12 +13,18 @@ const cors = require("cors");
 
 //database connect
 mongoose.connect(keys.mongoURI);
+//models
+require("./models/User")
+
+//passport
+require("./services/passport");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(router);
 
 console.log("selam server!");
 
