@@ -3,7 +3,7 @@ import axios from "axios";
 
 const initialState = {
   isAuthenticated: false,
-  errorMessage: "",
+  errorMessages: {},
   token: ""
 };
 
@@ -20,14 +20,13 @@ export default (state = initialState, action) => {
         ...state,
         token : "Bearer " + action.payload,
         isAuthenticated: true,
-        errorMessage: ""
+        errorMessages: {}
       };
 
     case AUTH_ERROR:
-      console.log("auth error");
       return {
         ...state,
-        errorMessage: "This email is already taken!"
+        errorMessages: action.payload
       }
 
     default:
