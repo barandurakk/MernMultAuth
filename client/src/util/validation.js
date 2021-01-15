@@ -27,7 +27,7 @@ export const validateFormData = (formData) => {
     error.email = "Please enter a valid email!";
   }
 
-  if(formData.name){ //is name exist
+  if(formData.name){ //is name exist (solve)
     if(isEmpty(formData.name) || !validateName(formData.name)){
       error.name= "Please enter a valid name!";
     }
