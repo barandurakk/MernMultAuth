@@ -20,8 +20,6 @@ app.post("/api/auth/google",
         usersController.googleOAuth
     );
 
-
-
 app.post("/api/auth/link/google", 
         checkJWT,
         passport.authorize('google-token', { session: false }),
@@ -32,5 +30,7 @@ app.post("/api/auth/unlink/google",
         checkJWT,
         usersController.unlinkGoogle
         )
+
+app.get("/api/getuser", checkJWT,usersController.getUser);
 
 };

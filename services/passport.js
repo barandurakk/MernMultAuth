@@ -8,42 +8,6 @@ const { ExtractJwt } = require('passport-jwt');
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
 
-// passport.use(
-//     new GoogleStrategy(
-//         {
-//             clientID: keys.googleClientID,
-//             clientSecret: keys.googleSecretID,
-//             callbackURL: "/auth/google/callback",
-//             proxy: true,
-//         },
-//         async (accessToken, refreshToken, profile, done) => {
-
-//             console.log("profıle: ", profile);
-
-//             //check user sign in before with google
-//             const existingUser = await User.findOne({ googleId: profile.id });
-//             if(existingUser){
-//                 return done(null, existingUser);
-//             }
-
-//             //user not sign in with google before but did register via email
-//             const alreadyMember = await User.findOne({email: profile._json.email})
-//             if(alreadyMember){
-//                 return(done(null, alreadyMember));
-//             }
-
-
-//             const user = await new User({
-//                 googleId: profile.id,
-//                 email: profile._json.email,
-//                 name: profile.displayName,
-//                 dateRegister: Date.now(),
-//                 registerBy: "google",
-//             }).save();
-//             done(null, user);
-//                 }
-//     )
-// )
 
 passport.use(new JwtStrategy(
     {
@@ -147,7 +111,7 @@ passport.use(new LocalStrategy(
     },
     async (email, password, done) => {
         try{
-
+            console.log("inside the local strategy");
             //finding user
             const user = await User.findOne({"local.email": email});
             if(!user){
@@ -163,10 +127,6 @@ passport.use(new LocalStrategy(
                     done(null, user);
                 }
             });
-
-            
-
-            
 
         }catch(err){
             done(err, false);

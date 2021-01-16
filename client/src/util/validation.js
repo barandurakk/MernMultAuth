@@ -19,7 +19,7 @@ const validatePassword = (password) => {
   return re.test(password);
 }
 
-export const validateFormData = (formData) => {
+export const validateSignUp = (formData) => {
   let error = {};
 
   if(!validateEmail(formData.email) || isEmpty(formData.email)){
@@ -27,11 +27,10 @@ export const validateFormData = (formData) => {
     error.email = "Please enter a valid email!";
   }
 
-  if(formData.name){ //is name exist (solve)
     if(isEmpty(formData.name) || !validateName(formData.name)){
       error.name= "Please enter a valid name!";
     }
-  }
+  
  
 
   if(!validatePassword(formData.password) || isEmpty(formData.password)){
@@ -41,3 +40,21 @@ export const validateFormData = (formData) => {
   return error;
 
 }
+
+export const validateSignIn = (formData) => {
+
+  let error = {};
+
+if(!validateEmail(formData.email) || isEmpty(formData.email)){
+  error.email = "Please enter a valid email!";
+}
+
+if(isEmpty(formData.password)){
+  error.password = "Please enter a valid password!";
+}
+
+return error;
+
+}
+
+

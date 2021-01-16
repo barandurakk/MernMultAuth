@@ -1,27 +1,40 @@
-import React from "react";
-import { Router, Switch, Route } from "react-router-dom";
-import createBrowserHistory from "history/createBrowserHistory";
-import Profile from "./pages/Profile";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import React, { Component } from 'react';
+import jwtDecode from "jwt-decode";
+import { SET_AUTHENTICATED } from "./actions/types";
+import {getUserData} from "./actions/index"
+import axios from "axios";
 
-//components
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:5000";
 
-import Landing from "./pages/landing.js";
+class App extends Component {
 
-export const history = createBrowserHistory();
+  UNSAFE_componentWillMount() {
 
-class App extends React.Component {
+    const token = localStorage.getItem("JwtToken");
+    const {store} = this.props;
+
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.exp * 1000 < Date.now()) {
+       // store.dispatch(logoutUser());
+      } else {
+        store.dispatch({ type: SET_AUTHENTICATED });
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem("JwtToken");
+        store.dispatch(getUserData());
+      }
+}
+  }
+
   render() {
     return (
-      <Router history={history}>
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path ="/register" component={Register} />
-      </Router>
+      <div>
+        <div className="container">
+        { this.props.children }
+        </div>
+      </div>
     );
   }
 }
 
-export default App;
+export default (App);

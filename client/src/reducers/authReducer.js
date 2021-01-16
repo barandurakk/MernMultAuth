@@ -1,32 +1,51 @@
-import {SIGN_UP, AUTH_ERROR} from "../actions/types";
+import {AUTH_ERROR, SET_AUTHENTICATED,SET_UNAUTHENTICATED, SET_USER, USER_LOADING} from "../actions/types";
 import axios from "axios";
 
 const initialState = {
   isAuthenticated: false,
-  errorMessages: {},
-  token: ""
+  errorMessage: "",
+  details: {},
+  loading: false
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    case SIGN_UP:
-      //save token to the local store
-      localStorage.setItem("JwtToken", "Bearer " + action.payload);
-
-      axios.defaults.headers.common['Authorization'] = localStorage.getItem("JwtToken");
-
+    case SET_AUTHENTICATED:
       return {
         ...state,
-        token : "Bearer " + action.payload,
         isAuthenticated: true,
-        errorMessages: {}
-      };
+        errorMessage: ""
+      }
+
+    case SET_UNAUTHENTICATED:
+      return {
+        ...state,
+        isAuthenticated: false,
+        details: {}
+      }
+
+    case USER_LOADING:
+      return {
+        ...state,
+        loading:true
+      }
+
+    case SET_USER:
+      return {
+        ...state,
+        isAuthenticated: true,
+        details:{
+          ...action.payload  
+        },
+        errorMessage: "",
+        loading: false
+      }
 
     case AUTH_ERROR:
       return {
         ...state,
-        errorMessages: action.payload
+        errorMessage: action.payload
       }
 
     default:

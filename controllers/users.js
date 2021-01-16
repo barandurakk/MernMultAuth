@@ -81,11 +81,7 @@ module.exports = {
     },
 
     linkGoogle: async (req,res,next) => {
-        res.json({
-            success:true,
-            methods: req.user.methods,
-            message: "Successfully linked account with Google!"
-        });
+        res.status(200).send({message: "Successfully linked account with Google"})
     },
 
     unlinkGoogle: async (req,res, next) => {
@@ -107,6 +103,10 @@ module.exports = {
             message: "Succesfully unlinked account from Google!"
         });
 
+    },
+
+    getUser: async (req,res,next) => {
+        res.send(req.user);
     }
 
 
