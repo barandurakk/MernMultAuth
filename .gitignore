@@ -2,4 +2,4 @@
 /client/node_modules
 /client/build
 /node_modules
-/util/dev.js
+/util/dev
