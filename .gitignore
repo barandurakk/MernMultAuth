@@ -2,4 +2,5 @@
 /client/node_modules
 /client/build
 /node_modules
-/util/dev
+/util/dev.js
+/client/src/config/dev.js
