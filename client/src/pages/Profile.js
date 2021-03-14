@@ -17,7 +17,7 @@ class Profile extends React.Component{
             this.setState({linkError: "You can only link Google account when emails are same!"});
         }else{
              await this.props.linkWithGoogle(res.accessToken);
-             this.setState({linkError: ""})
+            this.setState({linkError: ""})
         }
        
       }

@@ -48,8 +48,9 @@ passport.use(
             // 2) When linking account to the existing one
 
             try{
-            
-                if(req.user){
+                //user try to link account, 
+               //if user's local email and google email are the same link it
+                if(req.user && req.user.local.email === profile._json.email){
                     
                     //already logged in via local. So link google account
                     req.user.methods.push("google");
@@ -59,6 +60,10 @@ passport.use(
                     }
                     await req.user.save();
                     return done(null, req.user);
+                }else if (req.user && req.user.local.email !== profile._json.email){
+
+                    return done(null, false, {message: "You can only link Google account when emails are same!"})
+
                 }else{
                     // we have to create new account via google
 
